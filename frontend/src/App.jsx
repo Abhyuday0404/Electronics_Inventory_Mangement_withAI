@@ -18,9 +18,9 @@ import { useState } from "react";
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const handleLogin = (email, password) => {
-         if (email === "admin@gmail.com" && password === "admin") {
-             setIsAuthenticated(true);
-         }
+        const isValid = email === "admin@gmail.com" && password === "admin";
+        if (isValid) setIsAuthenticated(true);
+        return isValid;
     };
 
     return (
@@ -34,7 +34,7 @@ const App = () => {
                     path="/*"
                     element={
                         isAuthenticated ? (
-                            <Layout>
+                            <Layout onSignOut={() => setIsAuthenticated(false)}>
                                 <Routes>
                                     <Route path="/" element={<Dashboard />} />
                                     <Route path="/products" element={<Products />} />
