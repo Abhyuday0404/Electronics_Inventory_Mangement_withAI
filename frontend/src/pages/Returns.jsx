@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
-} from "../components/ui/Table"; // Adjust path if needed
-import { Button } from "../components/ui/Button";
-import { Input } from "../components/ui/Input"; // Uncommented
-import { Label } from "../components/ui/Label"; // Uncommented
+} from "../components/ui/table"; // Adjust path if needed
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input"; // Uncommented
+import { Label } from "../components/ui/label"; // Uncommented
 // import { Textarea } from "../components/ui/Textarea"; // REMOVED THIS IMPORT
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose
-} from "../components/ui/Dialog"; // Uncommented
+} from "../components/ui/dialog"; // Uncommented
 import { FiLoader, FiAlertCircle, FiPlusCircle } from "react-icons/fi";
 
 const Returns = () => {

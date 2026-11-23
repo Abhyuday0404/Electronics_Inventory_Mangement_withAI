@@ -6,10 +6,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../components/ui/Table"; // Adjust paths if needed
-import { Button } from "../components/ui/Button";
-import { Input } from "../components/ui/Input";
-import { Label } from "../components/ui/Label"; // Import Label
+} from "../components/ui/table"; // Adjust paths if needed
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label"; // Import Label
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,7 @@ import {
   DialogDescription, // Import DialogDescription
   DialogFooter, // Import DialogFooter
   DialogClose,
-} from "../components/ui/Dialog"; // Adjust paths if needed
+} from "../components/ui/dialog"; // Adjust paths if needed
 import { FiUserPlus, FiTrash2, FiLoader, FiAlertCircle } from "react-icons/fi"; // Import icons
 
 const Users = () => {

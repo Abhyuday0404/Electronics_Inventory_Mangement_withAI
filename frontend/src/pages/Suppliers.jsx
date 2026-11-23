@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "../components/ui/Table";
-import { Button } from "../components/ui/Button";
-import { Input } from "../components/ui/Input";
-import { Label } from "../components/ui/Label";
+} from "../components/ui/table";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
-} from "../components/ui/Dialog";
+} from "../components/ui/dialog";
 import { FiUserPlus, FiTrash2, FiLoader, FiAlertCircle, FiSearch, FiEdit } from "react-icons/fi"; // Added FiEdit
 
 const Suppliers = () => {

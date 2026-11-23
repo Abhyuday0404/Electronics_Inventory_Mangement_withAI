@@ -1,91 +1,39 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/ui/Button"; // Adjust paths if needed
-import { Input } from "../components/ui/Input";
-import { Label } from "../components/ui/Label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "../components/ui/Card";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { InventoryBrand } from "../components/Layout";
 
-// Assume onLogin expects email and password as separate arguments
-const Login = ({ onLogin }) => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+export default function Login({ onLogin }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setError("");
+  function handleSubmit(event) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    setError(!onLogin(form.get("email").trim(), form.get("password")));
+  }
 
-        // Hardcoded Login Check
-        if (email === "admin@gmail.com" && password === "admin") {
-            console.log("Credentials match in Login.jsx, calling onLogin..."); // Add console log
-
-            // ✅ *** Call onLogin with TWO arguments ***
-            if (onLogin) {
-                 onLogin(email, password); // Pass email and password separately
-            } else {
-                 console.warn("onLogin prop not provided to Login component");
-            }
-
-            navigate("/"); // Navigate after calling onLogin
-        } else {
-             console.log("Credentials mismatch in Login.jsx"); // Add console log
-             // Provide hint for demo purposes
-            setError("Invalid email or password (Hint: admin@gmail.com / admin)");
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <Card className="w-full max-w-md shadow-lg">
-                <CardHeader className="text-center">
-                    <CardTitle className="text-2xl font-bold">Login to Smart Inventory</CardTitle>
-                    <CardDescription>Enter your credentials to access your account</CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="admin@gmail.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="admin"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        {error && <p className="text-red-600 text-sm font-medium">{error}</p>}
-
-                        <Button type="submit" className="w-full flex items-center justify-center">
-                            Login
-                        </Button>
-                    </form>
-                </CardContent>
-            </Card>
-        </div>
-    );
-};
-
-export default Login;
+  return (
+    <main className="login-screen">
+      <section className="login-intro">
+        <InventoryBrand />
+        <div><h1>Stock, orders, and sales in one workspace.</h1><p>Manage electronics inventory from purchase order to invoice.</p></div>
+      </section>
+      <section className="login-form-wrap" aria-labelledby="sign-in-heading">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2 id="sign-in-heading">Sign in</h2>
+          <p>Enter your credentials to open your inventory workspace.</p>
+          <label htmlFor="email">Email address</label>
+          <input id="email" name="email" type="email" autoComplete="username" placeholder="you@example.com" required />
+          <label htmlFor="password">Password</label>
+          <div className="password-field">
+            <input id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="current-password" required />
+            <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FiEyeOff /> : <FiEye />}</button>
+          </div>
+          {error && <p role="alert" className="login-error">The email address or password is incorrect.</p>}
+          <button type="submit" className="workspace-button">Sign in</button>
+          <p className="demo-hint">Demo access: <code>admin@gmail.com</code> / <code>admin</code></p>
+        </form>
+      </section>
+    </main>
+  );
+}

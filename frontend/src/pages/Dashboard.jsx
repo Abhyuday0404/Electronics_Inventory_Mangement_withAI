@@ -1,98 +1,75 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"; // Adjust path if needed
-import { FiBox, FiTruck, FiAlertCircle, FiDollarSign, FiShoppingCart, FiUsers, FiFileText, FiLoader } from "react-icons/fi"; // Added FiLoader
+import { Link } from "react-router-dom";
+import { FiAlertCircle, FiBox, FiCreditCard, FiRefreshCw, FiShoppingCart, FiTruck, FiUsers } from "react-icons/fi";
 
-const DashboardCard = ({ title, value, icon: Icon, isLoading }) => (
-  <Card className="w-full bg-gray-800 hover:shadow-lg transition-shadow">
-    <CardHeader className="flex flex-row items-center justify-between p-4 pb-2">
-      <CardTitle className="text-base font-semibold text-white">{title}</CardTitle>
-      <Icon className="w-5 h-5 text-white" />
-    </CardHeader>
-    <CardContent className="p-4 pt-0">
-      {isLoading ? (
-        <div className="h-8 w-1/2 bg-gray-200 rounded animate-pulse"></div>
-      ) : (
-        <div className="text-2xl font-bold text-white">{value}</div>
-      )}
-    </CardContent>
-  </Card>
-);
+const metrics = [
+  ["Total products", "totalProducts", FiBox, "/products"],
+  ["Low-stock alerts", "lowStockAlerts", FiAlertCircle, "/alerts"],
+  ["Completed sales", "totalSales", FiCreditCard, "/sales"],
+  ["Purchase orders", "totalOrders", FiShoppingCart, "/purchase-orders"],
+  ["Active suppliers", "activeSuppliers", FiTruck, "/suppliers"],
+  ["Team accounts", "totalUsers", FiUsers, "/users"],
+];
 
-const Dashboard = () => {
-  const [stats, setStats] = useState({
-    totalProducts: 0,
-    activeSuppliers: 0,
-    lowStockAlerts: 0,
-    totalSales: 0,
-    totalOrders: 0,
-    totalUsers: 0,
-    totalReports: 0,
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const number = new Intl.NumberFormat();
+const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+
+export default function Dashboard() {
+  const [revision, setRevision] = useState(0);
+  const [view, setView] = useState({ loading: true, stats: null, error: false });
 
   useEffect(() => {
-    fetchDashboardStats();
-  }, []);
-
-  const fetchDashboardStats = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("http://localhost:5000/api/dashboard/stats");
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch dashboard stats: ${response.status} ${errorText}`);
+    const request = new AbortController();
+    async function load() {
+      try {
+        const response = await fetch("http://localhost:5000/api/dashboard/stats", { signal: request.signal });
+        if (!response.ok) throw new Error("Dashboard request failed");
+        setView({ loading: false, stats: await response.json(), error: false });
+      } catch (error) {
+        if (error.name !== "AbortError") setView({ loading: false, stats: null, error: true });
       }
-      const data = await response.json();
-      setStats(prevStats => ({
-        ...prevStats,
-        totalProducts: data.totalProducts ?? 0,
-        activeSuppliers: data.activeSuppliers ?? 0,
-        lowStockAlerts: data.lowStockAlerts ?? 0,
-        totalSales: data.totalSales ?? 0,
-        totalOrders: data.totalOrders ?? 0,
-        totalUsers: data.totalUsers ?? 0,
-        totalReports: data.totalReports ?? 0,
-      }));
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
     }
+    load();
+    return () => request.abort();
+  }, [revision]);
+
+  const refresh = () => {
+    setView({ loading: true, stats: null, error: false });
+    setRevision((current) => current + 1);
   };
 
-  const formattedTotalSales = Number(stats.totalSales).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard Overview</h1>
-
-        {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-300 text-red-800 rounded">
-            <p><strong>Error:</strong> {error}</p>
-            <button onClick={fetchDashboardStats} className="mt-2 text-sm font-semibold underline">Retry</button>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          <DashboardCard title="Total Products" value={stats.totalProducts} icon={FiBox} isLoading={loading} />
-          <DashboardCard title="Active Suppliers" value={stats.activeSuppliers} icon={FiTruck} isLoading={loading} />
-          <DashboardCard title="Low Stock Alerts" value={stats.lowStockAlerts} icon={FiAlertCircle} isLoading={loading} />
-          <DashboardCard title="Total Sales Value" value={formattedTotalSales} icon={FiDollarSign} isLoading={loading} />
-          <DashboardCard title="Total Orders" value={stats.totalOrders} icon={FiShoppingCart} isLoading={loading} />
-          <DashboardCard title="Total Users" value={stats.totalUsers} icon={FiUsers} isLoading={loading} />
-          {/* <DashboardCard title="Reports Generated" value={stats.totalReports} icon={FiFileText} isLoading={loading} /> */}
-        </div>
-
+    <section className="overview">
+      <header className="overview-heading">
+        <div><h1>Inventory overview</h1><p>Track stock levels, orders, and completed sales across your inventory.</p></div>
+        <button type="button" className="workspace-button button-outline" onClick={refresh} disabled={view.loading}><FiRefreshCw aria-hidden="true" /> Refresh</button>
+      </header>
+      {view.error && <div className="overview-error" role="alert"><FiAlertCircle aria-hidden="true" /><span>Inventory totals are unavailable. Check the connection and try again.</span><button type="button" onClick={refresh}>Retry</button></div>}
+      <div className="metric-grid" aria-busy={view.loading}>
+        {metrics.map(([label, key, Icon, path]) => {
+          const value = view.stats?.[key];
+          const count = value == null ? "—" : (key === "totalSales" ? currency : number).format(value);
+          return (
+            <Link to={path} key={key} className={key === "lowStockAlerts" && value > 0 ? "metric-card metric-alert" : "metric-card"}>
+              <span className="metric-icon"><Icon aria-hidden="true" /></span>
+              <span className="metric-label">{label}</span>
+              {view.loading ? <span className="metric-placeholder" aria-label="Loading" /> : <strong>{count}</strong>}
+            </Link>
+          );
+        })}
       </div>
-    </div>
+      <div className="overview-actions">
+        <section className="workspace-panel">
+          <h2>Stock alerts</h2>
+          <p>{view.stats ? (view.stats.lowStockAlerts > 0 ? "Review products below their stock thresholds." : "There are no low-stock alerts to review.") : "Check which products need replenishment."}</p>
+          <Link to="/alerts" className="workspace-button">View stock alerts</Link>
+        </section>
+        <section className="workspace-panel">
+          <h2>Order and billing activity</h2>
+          <p>Follow incoming orders or review invoices for completed sales.</p>
+          <div className="panel-links"><Link to="/purchase-orders" className="workspace-button button-outline">Purchase orders</Link><Link to="/billing" className="workspace-button button-outline">Invoices</Link></div>
+        </section>
+      </div>
+    </section>
   );
-};
-
-export default Dashboard;
+}

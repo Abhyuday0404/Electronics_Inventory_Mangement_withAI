@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
-} from "../components/ui/Table"; // Adjust paths if needed
-import { Button } from "../components/ui/Button";
-import { Input } from "../components/ui/Input";
-import { Label } from "../components/ui/Label"; // Import Label
+} from "../components/ui/table"; // Adjust paths if needed
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label"; // Import Label
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription
-} from "../components/ui/Dialog"; // Adjust paths if needed
+} from "../components/ui/dialog"; // Adjust paths if needed
 // Added FiEdit2 for general product edit, FiTrash2 for potential delete later
 import { FiLoader, FiAlertCircle, FiEdit, FiEdit2, FiSave, FiPlusCircle, FiXCircle, FiTrash2 } from "react-icons/fi";
 
@@ -230,43 +230,43 @@ const Products = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-black">Product Management</h1> {/* Light text for dark theme */}
         <Button
             onClick={() => { setShowAddModal(true); setAddError(null); setNewProduct(initialNewProductState); }}
-            className="bg-white text-black hover:bg-gray-200" // Contrasting Add button
+            className="bg-teal-700 text-white hover:bg-teal-800" // Contrasting Add button
         >
           <FiPlusCircle className="mr-2 h-4 w-4" /> Add Product
         </Button>
       </div>
 
       {error && (products.length > 0 || categories.length > 0) && (
-        <div className="p-3 bg-yellow-700 border border-yellow-600 text-yellow-100 rounded flex items-center text-sm"> {/* Darker warning */}
+        <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded flex items-center text-sm"> {/* Darker warning */}
           <FiAlertCircle className="h-4 w-4 mr-2" /> Warning: {error}
         </div>
       )}
 
       <Input
-        className="max-w-sm text-white bg-gray-700 placeholder:text-gray-400 border-gray-600 focus:ring-indigo-500 focus:border-indigo-500"
+        className="max-w-sm text-slate-900 bg-white placeholder:text-slate-500 border-slate-300 focus:ring-indigo-500 focus:border-indigo-500"
         placeholder="Search by product name or category..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <div className="border border-gray-700 rounded-lg overflow-hidden shadow-md"> {/* Darker border */}
+      <div className="border border-slate-200 rounded-lg overflow-hidden shadow-md"> {/* Darker border */}
         <Table>
-          <TableHeader className="bg-gray-800"> {/* Darker header */}
+          <TableHeader className="bg-slate-100"> {/* Darker header */}
             <TableRow>
-              <TableHead className="w-[80px] text-gray-300">ID</TableHead>
-              <TableHead className="text-gray-300">Name</TableHead>
-              <TableHead className="text-gray-300">Category</TableHead>
-              <TableHead className="text-gray-300">Description</TableHead>
-              <TableHead className="w-[100px] text-right text-gray-300">Stock</TableHead>
-              <TableHead className="w-[100px] text-right text-gray-300">Threshold</TableHead>
-              <TableHead className="w-[120px] text-right text-gray-300">Price</TableHead>
-              <TableHead className="w-[160px] text-center text-gray-300">Actions</TableHead> {/* Increased width for two buttons */}
+              <TableHead className="w-[80px] text-slate-700">ID</TableHead>
+              <TableHead className="text-slate-700">Name</TableHead>
+              <TableHead className="text-slate-700">Category</TableHead>
+              <TableHead className="text-slate-700">Description</TableHead>
+              <TableHead className="w-[100px] text-right text-slate-700">Stock</TableHead>
+              <TableHead className="w-[100px] text-right text-slate-700">Threshold</TableHead>
+              <TableHead className="w-[120px] text-right text-slate-700">Price</TableHead>
+              <TableHead className="w-[160px] text-center text-slate-700">Actions</TableHead> {/* Increased width for two buttons */}
             </TableRow>
           </TableHeader>
           <TableBody className="divide-y divide-gray-700"> {/* Darker divider */}
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
-                <TableRow key={product.product_id} className="hover:bg-gray-800/50"> {/* Darker hover */}
+                <TableRow key={product.product_id} className="hover:bg-slate-50"> {/* Darker hover */}
                   <TableCell className="font-medium text-black">{product.product_id}</TableCell>
                   <TableCell className="text-black">{product.product_name}</TableCell>
                   <TableCell className="text-black">{product.category_name || "N/A"}</TableCell>
@@ -284,7 +284,7 @@ const Products = () => {
                       size="sm"
                       onClick={() => openEditModal(product)} // Open Edit Modal
                       title="Edit Product Details"
-                      className="border-blue-500 text-blue-400 hover:bg-blue-700 hover:text-white"
+                      className="border-blue-500 text-blue-700 hover:bg-blue-700 hover:text-white"
                     >
                       <FiEdit2 className="h-4 w-4" /> {/* General Edit Icon */}
                     </Button>
@@ -293,7 +293,7 @@ const Products = () => {
                       size="sm"
                       onClick={() => openThresholdModal(product)}
                       title="Set Low Stock Threshold"
-                      className="border-yellow-500 text-yellow-400 hover:bg-yellow-700 hover:text-white"
+                      className="border-yellow-500 text-amber-800 hover:bg-yellow-700 hover:text-white"
                     >
                       <FiEdit className="h-4 w-4" /> {/* Threshold Edit Icon */}
                     </Button>
@@ -307,41 +307,41 @@ const Products = () => {
 
     {/* Add Product Modal (Dark Mode) */}
     <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
-        <DialogContent className="sm:max-w-lg bg-black rounded-lg shadow-lg border border-gray-700 overflow-hidden">
-        <DialogHeader className="px-6 py-5 bg-gray-900 border-b border-gray-700">
-            <DialogTitle className="text-lg font-semibold leading-6 text-white">Add New Product</DialogTitle>
-            <DialogDescription className="mt-1 text-sm text-gray-300">Fill in product details. * required.</DialogDescription>
+        <DialogContent className="sm:max-w-lg bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden">
+        <DialogHeader className="px-6 py-5 bg-slate-50 border-b border-slate-200">
+            <DialogTitle className="text-lg font-semibold leading-6 text-slate-900">Add New Product</DialogTitle>
+            <DialogDescription className="mt-1 text-sm text-slate-700">Fill in product details. * required.</DialogDescription>
         </DialogHeader>
-        <form id="add-product-form" onSubmit={handleAddProduct} className="px-6 py-6 space-y-5 bg-black">
-            {addError && (<div className="p-3 bg-red-900 border border-red-700 text-red-100 rounded-md text-sm font-medium">{addError}</div>)}
+        <form id="add-product-form" onSubmit={handleAddProduct} className="px-6 py-6 space-y-5 bg-white">
+            {addError && (<div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-md text-sm font-medium">{addError}</div>)}
             <div>
-                <Label htmlFor="product_name_add" className="block text-sm font-medium text-gray-200 mb-1">Name <span className="text-red-400">*</span></Label>
-                <Input id="product_name_add" name="product_name" value={newProduct.product_name} onChange={handleAddInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                <Label htmlFor="product_name_add" className="block text-sm font-medium text-slate-800 mb-1">Name <span className="text-red-400">*</span></Label>
+                <Input id="product_name_add" name="product_name" value={newProduct.product_name} onChange={handleAddInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
             </div>
             <div>
-                <Label htmlFor="description_add" className="block text-sm font-medium text-gray-200 mb-1">Description</Label>
-                <Input id="description_add" name="description" placeholder="Optional product description" value={newProduct.description} onChange={handleAddInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" />
+                <Label htmlFor="description_add" className="block text-sm font-medium text-slate-800 mb-1">Description</Label>
+                <Input id="description_add" name="description" placeholder="Optional product description" value={newProduct.description} onChange={handleAddInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" />
             </div>
             <div>
-                <Label htmlFor="category_id_add" className="block text-sm font-medium text-gray-200 mb-1">Category <span className="text-red-400">*</span></Label>
-                <select id="category_id_add" name="category_id" value={newProduct.category_id} onChange={handleAddInputChange} className="block w-full pl-3 pr-10 py-2 text-base border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md" required>
+                <Label htmlFor="category_id_add" className="block text-sm font-medium text-slate-800 mb-1">Category <span className="text-red-400">*</span></Label>
+                <select id="category_id_add" name="category_id" value={newProduct.category_id} onChange={handleAddInputChange} className="block w-full pl-3 pr-10 py-2 text-base border-slate-200 bg-slate-100 text-slate-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md" required>
                     <option value="" disabled>Select Category...</option>
                     {categories.map(c => (<option key={c.category_id} value={c.category_id}>{c.category_name}</option>))}
                 </select>
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <Label htmlFor="unit_price_add" className="block text-sm font-medium text-gray-200 mb-1">Price ($) <span className="text-red-400">*</span></Label>
-                    <Input id="unit_price_add" name="unit_price" type="number" placeholder="0.00" step="0.01" min="0" value={newProduct.unit_price} onChange={handleAddInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                    <Label htmlFor="unit_price_add" className="block text-sm font-medium text-slate-800 mb-1">Price ($) <span className="text-red-400">*</span></Label>
+                    <Input id="unit_price_add" name="unit_price" type="number" placeholder="0.00" step="0.01" min="0" value={newProduct.unit_price} onChange={handleAddInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
                 </div>
                 <div>
-                    <Label htmlFor="current_stock_add" className="block text-sm font-medium text-gray-200 mb-1">Stock <span className="text-red-400">*</span></Label>
-                    <Input id="current_stock_add" name="current_stock" type="number" placeholder="0" min="0" step="1" value={newProduct.current_stock} onChange={handleAddInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                    <Label htmlFor="current_stock_add" className="block text-sm font-medium text-slate-800 mb-1">Stock <span className="text-red-400">*</span></Label>
+                    <Input id="current_stock_add" name="current_stock" type="number" placeholder="0" min="0" step="1" value={newProduct.current_stock} onChange={handleAddInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
                 </div>
             </div>
         </form>
-        <DialogFooter className="px-6 py-4 bg-gray-900 border-t border-gray-700 flex justify-end space-x-3">
-            <DialogClose asChild><Button type="button" variant="outline" className="border-gray-600 bg-gray-800 text-gray-200 hover:bg-gray-700">Cancel</Button></DialogClose>
+        <DialogFooter className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end space-x-3">
+            <DialogClose asChild><Button type="button" variant="outline" className="border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200">Cancel</Button></DialogClose>
             <Button type="submit" form="add-product-form" disabled={isAdding} className="text-black bg-white hover:bg-gray-200">
                 {isAdding && <FiLoader className="mr-2 h-4 w-4 animate-spin" />} {isAdding ? "Adding..." : "Add Product"}
             </Button>
@@ -351,50 +351,50 @@ const Products = () => {
 
     {/* --- Edit Product Modal (Dark Mode) --- */}
     <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
-        <DialogContent className="sm:max-w-lg bg-black rounded-lg shadow-lg border border-gray-700 overflow-hidden">
-        <DialogHeader className="px-6 py-5 bg-gray-900 border-b border-gray-700">
-            <DialogTitle className="text-lg font-semibold leading-6 text-white">
+        <DialogContent className="sm:max-w-lg bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden">
+        <DialogHeader className="px-6 py-5 bg-slate-50 border-b border-slate-200">
+            <DialogTitle className="text-lg font-semibold leading-6 text-slate-900">
                 Edit Product: {editingProductDetails?.product_name}
             </DialogTitle>
-            <DialogDescription className="mt-1 text-sm text-gray-300">
+            <DialogDescription className="mt-1 text-sm text-slate-700">
                 Modify the product details below. * required.
             </DialogDescription>
         </DialogHeader>
         {/* Ensure editingProductDetails is not null before rendering form */}
         {editingProductDetails && (
-            <form id="edit-product-form" onSubmit={handleUpdateProduct} className="px-6 py-6 space-y-5 bg-black">
-                {editError && (<div className="p-3 bg-red-900 border border-red-700 text-red-100 rounded-md text-sm font-medium">{editError}</div>)}
+            <form id="edit-product-form" onSubmit={handleUpdateProduct} className="px-6 py-6 space-y-5 bg-white">
+                {editError && (<div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-md text-sm font-medium">{editError}</div>)}
                 {/* Hidden Product ID - not typically shown but needed for submission */}
                 {/* <input type="hidden" name="product_id" value={editingProductDetails.product_id} /> */}
                 <div>
-                    <Label htmlFor="product_name_edit" className="block text-sm font-medium text-gray-200 mb-1">Name <span className="text-red-400">*</span></Label>
-                    <Input id="product_name_edit" name="product_name" value={editingProductDetails.product_name} onChange={handleEditInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                    <Label htmlFor="product_name_edit" className="block text-sm font-medium text-slate-800 mb-1">Name <span className="text-red-400">*</span></Label>
+                    <Input id="product_name_edit" name="product_name" value={editingProductDetails.product_name} onChange={handleEditInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
                 </div>
                 <div>
-                    <Label htmlFor="description_edit" className="block text-sm font-medium text-gray-200 mb-1">Description</Label>
-                    <Input id="description_edit" name="description" placeholder="Optional product description" value={editingProductDetails.description} onChange={handleEditInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" />
+                    <Label htmlFor="description_edit" className="block text-sm font-medium text-slate-800 mb-1">Description</Label>
+                    <Input id="description_edit" name="description" placeholder="Optional product description" value={editingProductDetails.description} onChange={handleEditInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" />
                 </div>
                 <div>
-                    <Label htmlFor="category_id_edit" className="block text-sm font-medium text-gray-200 mb-1">Category <span className="text-red-400">*</span></Label>
-                    <select id="category_id_edit" name="category_id" value={editingProductDetails.category_id} onChange={handleEditInputChange} className="block w-full pl-3 pr-10 py-2 text-base border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md" required>
+                    <Label htmlFor="category_id_edit" className="block text-sm font-medium text-slate-800 mb-1">Category <span className="text-red-400">*</span></Label>
+                    <select id="category_id_edit" name="category_id" value={editingProductDetails.category_id} onChange={handleEditInputChange} className="block w-full pl-3 pr-10 py-2 text-base border-slate-200 bg-slate-100 text-slate-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md" required>
                         <option value="" disabled>Select Category...</option>
                         {categories.map(c => (<option key={c.category_id} value={c.category_id}>{c.category_name}</option>))}
                     </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <Label htmlFor="unit_price_edit" className="block text-sm font-medium text-gray-200 mb-1">Price ($) <span className="text-red-400">*</span></Label>
-                        <Input id="unit_price_edit" name="unit_price" type="number" placeholder="0.00" step="0.01" min="0" value={editingProductDetails.unit_price} onChange={handleEditInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                        <Label htmlFor="unit_price_edit" className="block text-sm font-medium text-slate-800 mb-1">Price ($) <span className="text-red-400">*</span></Label>
+                        <Input id="unit_price_edit" name="unit_price" type="number" placeholder="0.00" step="0.01" min="0" value={editingProductDetails.unit_price} onChange={handleEditInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
                     </div>
                     <div>
-                        <Label htmlFor="current_stock_edit" className="block text-sm font-medium text-gray-200 mb-1">Stock <span className="text-red-400">*</span></Label>
-                        <Input id="current_stock_edit" name="current_stock" type="number" placeholder="0" min="0" step="1" value={editingProductDetails.current_stock} onChange={handleEditInputChange} className="block w-full border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" required />
+                        <Label htmlFor="current_stock_edit" className="block text-sm font-medium text-slate-800 mb-1">Stock <span className="text-red-400">*</span></Label>
+                        <Input id="current_stock_edit" name="current_stock" type="number" placeholder="0" min="0" step="1" value={editingProductDetails.current_stock} onChange={handleEditInputChange} className="block w-full border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" required />
                     </div>
                 </div>
             </form>
         )}
-        <DialogFooter className="px-6 py-4 bg-gray-900 border-t border-gray-700 flex justify-end space-x-3">
-            <DialogClose asChild><Button type="button" variant="outline" className="border-gray-600 bg-gray-800 text-gray-200 hover:bg-gray-700">Cancel</Button></DialogClose>
+        <DialogFooter className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end space-x-3">
+            <DialogClose asChild><Button type="button" variant="outline" className="border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200">Cancel</Button></DialogClose>
             <Button type="submit" form="edit-product-form" disabled={isUpdatingProduct} className="text-black bg-white hover:bg-gray-200">
                 {isUpdatingProduct && <FiLoader className="mr-2 h-4 w-4 animate-spin" />} {isUpdatingProduct ? "Saving..." : "Save Changes"}
             </Button>
@@ -405,31 +405,31 @@ const Products = () => {
 
     {/* Set Threshold Modal (Dark Mode) */}
     <Dialog open={showThresholdModal} onOpenChange={setShowThresholdModal}>
-        <DialogContent className="sm:max-w-md bg-black rounded-lg shadow-lg border border-gray-700 overflow-hidden">
-        <DialogHeader className="px-6 py-5 bg-gray-900 border-b border-gray-700">
-            <DialogTitle className="text-lg font-semibold leading-6 text-white">Set Low Stock Threshold</DialogTitle>
-            <DialogDescription className="mt-1 text-sm text-gray-300">
-                Set stock level for "<strong className="text-white">{productForThreshold?.product_name}</strong>" (ID: {productForThreshold?.product_id}).
+        <DialogContent className="sm:max-w-md bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden">
+        <DialogHeader className="px-6 py-5 bg-slate-50 border-b border-slate-200">
+            <DialogTitle className="text-lg font-semibold leading-6 text-slate-900">Set Low Stock Threshold</DialogTitle>
+            <DialogDescription className="mt-1 text-sm text-slate-700">
+                Set stock level for "<strong className="text-slate-900">{productForThreshold?.product_name}</strong>" (ID: {productForThreshold?.product_id}).
             </DialogDescription>
         </DialogHeader>
-        <form id="set-threshold-form" onSubmit={handleUpdateThreshold} className="px-6 py-6 space-y-5 bg-black">
-            {thresholdError && (<div className="p-3 bg-red-900 border border-red-700 text-red-100 rounded-md text-sm font-medium">{thresholdError}</div>)}
+        <form id="set-threshold-form" onSubmit={handleUpdateThreshold} className="px-6 py-6 space-y-5 bg-white">
+            {thresholdError && (<div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-md text-sm font-medium">{thresholdError}</div>)}
             <div className="grid grid-cols-4 items-center gap-4"> {/* Keep grid for label-input alignment if preferred */}
-                <Label htmlFor="threshold_update" className="text-right text-gray-200 col-span-1">Threshold</Label> {/* Adjusted col-span */}
-                <Input id="threshold_update" name="threshold_update" type="number" min="0" step="1" placeholder={`Current: ${productForThreshold?.currentThreshold ?? 'Not Set'}`} value={newThreshold} onChange={handleThresholdChange} className="col-span-3 border-gray-700 bg-gray-800 text-white rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-gray-400" />
+                <Label htmlFor="threshold_update" className="text-right text-slate-800 col-span-1">Threshold</Label> {/* Adjusted col-span */}
+                <Input id="threshold_update" name="threshold_update" type="number" min="0" step="1" placeholder={`Current: ${productForThreshold?.currentThreshold ?? 'Not Set'}`} value={newThreshold} onChange={handleThresholdChange} className="col-span-3 border-slate-200 bg-slate-100 text-slate-900 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm placeholder:text-slate-500" />
             </div>
         </form>
-        <DialogFooter className="px-6 py-4 bg-gray-900 border-t border-gray-700 flex justify-between items-center"> {/* justify-between */}
+        <DialogFooter className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center"> {/* justify-between */}
             <div> {/* Wrapper for delete button */}
                 {productForThreshold?.currentThreshold !== null && productForThreshold?.currentThreshold !== undefined && (
-                    <Button type="button" variant="destructive" onClick={handleDeleteThreshold} disabled={isUpdatingThreshold} className="bg-red-700 hover:bg-red-800 text-white">
+                    <Button type="button" variant="destructive" onClick={handleDeleteThreshold} disabled={isUpdatingThreshold} className="bg-red-700 hover:bg-red-800 text-slate-900">
                         {isUpdatingThreshold && newThreshold === '' ? (<FiLoader className="mr-2 h-4 w-4 animate-spin" />) : (<FiXCircle className="mr-2 h-4 w-4" />)}
                         {isUpdatingThreshold && newThreshold === '' ? "Clearing..." : "Clear"}
                     </Button>
                 )}
             </div>
             <div className="space-x-3"> {/* Wrapper for cancel/save */}
-                <DialogClose asChild><Button type="button" variant="outline" className="border-gray-600 bg-gray-800 text-gray-200 hover:bg-gray-700">Cancel</Button></DialogClose>
+                <DialogClose asChild><Button type="button" variant="outline" className="border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200">Cancel</Button></DialogClose>
                 <Button type="submit" form="set-threshold-form" disabled={isUpdatingThreshold} className="text-black bg-white hover:bg-gray-200">
                     {isUpdatingThreshold && newThreshold !== '' ? (<FiLoader className="mr-2 h-4 w-4 animate-spin" />) : (<FiSave className="mr-2 h-4 w-4" />)}
                     {isUpdatingThreshold && newThreshold !== '' ? "Saving..." : "Save"}

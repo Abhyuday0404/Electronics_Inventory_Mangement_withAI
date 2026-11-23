@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
-} from "../components/ui/Table"; // Adjust path if needed
-import { Button } from "../components/ui/Button";
-import { Input } from "../components/ui/Input";
-import { Label } from "../components/ui/Label"; // Adjust path if needed
+} from "../components/ui/table"; // Adjust path if needed
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label"; // Adjust path if needed
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose
-} from "../components/ui/Dialog"; // Adjust path if needed
+} from "../components/ui/dialog"; // Adjust path if needed
 import { FiLoader, FiAlertCircle, FiEye, FiPrinter } from "react-icons/fi";
 
 // JsonViewer component is not used in the main flow, keeping it light is fine
